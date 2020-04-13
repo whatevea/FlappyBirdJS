@@ -1,0 +1,21 @@
+body{
+	margin:0;
+	display: flex;
+	height: 99vh;
+	justify-content: center;
+	align-items: center;
+
+}
+img{
+	display: none;
+}
+canvas{
+	display: none;
+	height: 99vh;
+	width:99vh;
+	background-color: gray;
+}
+#startScreen{
+	display: block;
+	color:maroon;
+}
