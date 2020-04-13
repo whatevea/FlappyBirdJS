@@ -44,7 +44,7 @@ if(bird.y>520){collided()}////  Falling Mechanism
 }
 //event listerner
 screen.canvas.onclick=()=>{
-	$('flyaudio').play();
+	//$('flyaudio').play();
 	jump=true;
 start=0;
 
@@ -72,7 +72,7 @@ pipeSet2=()=>{
 	//collison detection
 	if(bird.x+bird.width>pipeSetx2+pipemargin && bird.y<pipeSety2-pipeGap && bird.x<pipeSetx2+pipemargin+55){collided()}
 	if(bird.x+bird.width>pipeSetx2+pipemargin && bird.y+bird.height>pipeSety2 && bird.x<pipeSetx2+55+pipemargin){collided()}
-		if(pipeSetx2==-36){$('collidedaudio').play();score++;}
+		if(pipeSetx2==-36){$('scoreaudio').play();score++;}
 	pipeSetx2-=4;
 }
 pipeSet1();
