@@ -14,16 +14,19 @@ let pipeSetx=500
 let pipeSety=randomBetn(250,380);
 let pipeSetx2=pipeSetx+300;
 let pipeSety2=randomBetn(250,380);
-var interval;
+let collidedBool=false;
 //Everything 
 function render(){
-jumpCheck();
-screen.clearRect(0,0,500,500)
-screen.drawImage(bg,0,0,500,500);
-screen.drawImage(birdImg,bird.x,bird.y,bird.height,bird.width);
-drawMovePipes();
-writeScore();
-interval=requestAnimationFrame(render)	
+	if(!collidedBool){
+	jumpCheck();
+	screen.clearRect(0,0,500,500)
+	screen.drawImage(bg,0,0,500,500);
+	screen.drawImage(birdImg,bird.x,bird.y,bird.height,bird.width);
+	drawMovePipes();
+	writeScore();
+	requestAnimationFrame(render);
+	}
+
 }
 
 
@@ -41,6 +44,7 @@ if(bird.y>520){collided()}////  Falling Mechanism
 }
 //event listerner
 screen.canvas.onclick=()=>{
+	$('flyaudio').play();
 	jump=true;
 start=0;
 
@@ -57,7 +61,7 @@ if(pipeSetx<-180){pipeSety=randomBetn(250,380);pipeSetx=300}
 	//collison detection
 	if(bird.x+bird.width>pipeSetx+pipemargin && bird.y<pipeSety-pipeGap && bird.x<pipeSetx+pipemargin+55){collided()}
 	if(bird.x+bird.width>pipeSetx+pipemargin && bird.y+bird.height>pipeSety && bird.x<pipeSetx+55+pipemargin){collided()}
-	if(pipeSetx==-36){score++;}
+	if(pipeSetx==-36){$('scoreaudio').play(); score++;}
 	pipeSetx-=4;
 
 }
@@ -68,7 +72,7 @@ pipeSet2=()=>{
 	//collison detection
 	if(bird.x+bird.width>pipeSetx2+pipemargin && bird.y<pipeSety2-pipeGap && bird.x<pipeSetx2+pipemargin+55){collided()}
 	if(bird.x+bird.width>pipeSetx2+pipemargin && bird.y+bird.height>pipeSety2 && bird.x<pipeSetx2+55+pipemargin){collided()}
-		if(pipeSetx2==-36){score++;}
+		if(pipeSetx2==-36){$('collidedaudio').play();score++;}
 	pipeSetx2-=4;
 }
 pipeSet1();
@@ -83,12 +87,11 @@ function randomBetn(min, max) {
 //function collided
 
 function collided(){
-
-	cancelAnimationFrame(interval);
-	console.log(interval);
-	screen.canvas.style.display="none";
-	$('h3').innerText+=`Last Score ${score}`
-	$('startScreen').style.display="block";
+	$('collidedaudio').play();
+	collidedBool=true;	
+	setTimeout(()=>{
+	location.reload();},2000)
+		
 }
 
 function writeScore(){
@@ -101,6 +104,5 @@ screen.fillText(score, 150, 90);
 $('startScreen').onclick=()=>{
 	screen.canvas.style.display="block";
 	$('startScreen').style.display="none";
-	cancelAnimationFrame(interval);
-interval=window.requestAnimationFrame(render);
+		render();
 }
