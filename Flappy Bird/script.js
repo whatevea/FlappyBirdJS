@@ -23,7 +23,7 @@ screen.drawImage(bg,0,0,500,500);
 screen.drawImage(birdImg,bird.x,bird.y,bird.height,bird.width);
 drawMovePipes();
 writeScore();
-requestAnimationFrame(render)	
+interval=requestAnimationFrame(render)	
 }
 
 
@@ -101,5 +101,6 @@ screen.fillText(score, 150, 90);
 $('startScreen').onclick=()=>{
 	screen.canvas.style.display="block";
 	$('startScreen').style.display="none";
-	 interval=window.requestAnimationFrame(render);
+	cancelAnimationFrame(interval);
+interval=window.requestAnimationFrame(render);
 }
